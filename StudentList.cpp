@@ -52,7 +52,7 @@
 		Node* current = head;
 		while (current != nullptr){
 			cout << current -> data.name << " ";
-			current = next;
+			current = current -> next;
 		}
 
 	}
@@ -110,8 +110,8 @@
 	// the previous Node at your target index should be moved forward. "For exampe, Node with student at index i, becomes index i+1" 
 	// Remember that you already have methods that can add students to the front or back of list if needed! Don't repeat this code.
 	void StudentList::insertStudent(Student s, int index) {
-		if(index < 0){
-			addfront(s);
+		if(index == 0){
+			addFront(s);
 			return;
 		}
 		if(index >= numStudents){
@@ -120,14 +120,14 @@
 			return;
 		}
 
-		node current = head;
+		Node* current = head;
 		int i = 0;
 		while (i < index){
 			current = current -> next;
 			i++;
 		}
 
-		node* newNode = new Node(s, current, current -> prev);
+		Node* newNode = new Node(s, current, current -> prev);
 		current -> prev -> next = newNode;
 		current -> prev = newNode;
 		numStudents++;
@@ -140,12 +140,13 @@
 		Node* current = head;
 		while (current != nullptr){
 			if(current -> data.id == idNum)
-			return -> current -> data;
+			return current -> data;
+			current = current -> next;
 		}
-		current = current -> next;
+		
 
 		cout << "No student with that ID was found";
-		return student();
+		return Student();
 	}
 
 	// Remove a Node with a student from the list with a given id number
@@ -167,14 +168,14 @@
 
 		if (current == head){
 			popFront();
-			reutnr;
+			return;
 		}
 		if (current == tail){
 			popBack();
 			return;
 		}
 
-		current -> prev -> next = current next;
+		current -> prev -> next = current -> next;
 		current -> next -> prev = current -> prev;
 
 		delete current;
@@ -249,7 +250,7 @@
 	// from the front or back, and adjust numStudents accordingly.
 	// If the list is empty, print a message and do nothing.
 	void StudentList::removeBelowGPA(float threshold) {
-		if(otherList.head == nullptr){
+		if(head == nullptr){
 			cout << "The list you are trying to merge from is empty";
 			return;
 		}
@@ -264,7 +265,7 @@
 					popBack();
 				}
 				else{
-					current -> prev -> next = current next;
+					current -> prev -> next = current -> next;
 					current -> next -> prev = current -> prev;
 					delete current;
 					numStudents--;
